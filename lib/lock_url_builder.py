@@ -1,6 +1,5 @@
 from urllib.parse import urlencode
-import asyncio
-from WebAPI.lib.config import LockConfig
+from lib.config import LockConfig
 
 
 class LockUrlBuilder:

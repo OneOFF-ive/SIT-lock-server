@@ -1,7 +1,7 @@
 from aiohttp import web
-from WebAPI.lib.lock_url_builder import *
-from WebAPI.lib.send_request import *
-from WebAPI.lib.default_config import *
+from lib.lock_url_builder import *
+from lib.send_request import *
+from lib.default_config import *
 
 
 async def open_door(response):
