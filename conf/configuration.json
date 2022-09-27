@@ -1,0 +1,14 @@
+{
+  "database": {
+    "host": "",
+    "port": 8080,
+    "username": "",
+    "password": "",
+    "db": ""
+  },
+  "lock": {
+    "card_id": "515FF572",
+    "mac_id": "28:52:F9:18:84:67",
+    "base_url": "http://?/LMWeb/WebApi"
+  }
+}

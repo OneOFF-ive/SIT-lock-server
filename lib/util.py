@@ -1,6 +1,5 @@
 import json
-import aiofiles
-from WebAPI.lib.config import *
+from lib.config import *
 
 
 class Singleton(object):
