@@ -81,3 +81,11 @@ async def setDatabase(app):
 
 async def closeDatabase(app):
     await app['db'].close()
+
+
+__all__ = [
+    "Database",
+    "DatabaseBuilder",
+    "setDatabase",
+    "closeDatabase",
+]
