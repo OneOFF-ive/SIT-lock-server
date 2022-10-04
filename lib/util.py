@@ -25,9 +25,8 @@ def JsonDecodeToConfig(file_name: str):
 async def send_request(url: str):
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as resp:
-            print(resp.status)
-            print(await resp.text())
-            return resp
+            # print(resp.status)
+            return await resp.text()
 
 
 async def check_user_by_id(db: Database, s_id: str):
@@ -40,6 +39,7 @@ async def check_user_by_no(db: Database, c_no: str):
     sql = 'select * from user where c_no = %s'
     values = (c_no,)
     return await db.query(sql, values)
+
 
 # 指明util模块中需要导出的对象
 __all__ = [

@@ -17,7 +17,7 @@ async def open_door(request):
 
     if userList:
         url = await build_remote_open_door_url_by_config(request.app['config'].lock)
-        res = await send_request(url)
+        await send_request(url)
         text: str = '1'
 
     return web.Response(
