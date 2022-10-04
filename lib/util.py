@@ -1,7 +1,7 @@
 import json
 import aiohttp
 from lib.config import *
-from db import Database
+from lib.db import Database
 
 
 class Singleton(object):
@@ -27,6 +27,7 @@ async def send_request(url: str):
         async with session.get(url) as resp:
             print(resp.status)
             print(await resp.text())
+            return resp
 
 
 async def check_user_by_id(db: Database, s_id: str):
@@ -45,5 +46,6 @@ __all__ = [
     "Singleton",
     "JsonDecodeToConfig",
     "send_request",
-    "check_user_by_id"
+    "check_user_by_id",
+    "check_user_by_no"
 ]

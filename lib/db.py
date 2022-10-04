@@ -1,8 +1,5 @@
-import asyncio
 import aiomysql
-
 from lib.config import DatabaseConfig
-from lib.util import JsonDecodeToConfig
 
 
 class Database:
@@ -36,39 +33,42 @@ class Database:
         # 释放掉conn,将连接放回到连接池中
         await self.__pool.release(conn)
 
-    async def query(self, query, param=None):
+    async def query(self, sql: str, param: tuple = None):
         """
         查询操作
-        :param query: sql语句
+        :param sql: sql语句
         :param param: 参数
         :return:
         """
         conn, cur = await self.__getCursor()
-        await cur.execute(query, param)
+        await cur.execute(sql, param)
         res = await cur.fetchall()
 
         await self.__closeCursor(conn, cur)
         return res
 
-    async def execute(self, query, param=None):
+    async def execute(self, sql: str, param: tuple = None):
         """
         增删改 操作
-        :param query: sql语句
+        :param sql: sql语句
         :param param: 参数
         :return:
         """
         conn, cur = await self.__getCursor()
         res = True
 
-        await cur.execute(query, param)
+        await cur.execute(sql, param)
         if cur.rowcount == 0:
             res = False
         await self.__closeCursor(conn, cur)
         return res
 
+    async def close(self):
+        self.__pool.close()
+        await self.__pool.wait_closed()
+
 
 class DatabaseBuilder:
-
     async def build(config: DatabaseConfig, minsize=2, maxsize=5, autocommit=True):
         db = Database()
         await db.pool_init(config, minsize, maxsize, autocommit)
@@ -77,3 +77,7 @@ class DatabaseBuilder:
 
 async def setDatabase(app):
     app['db'] = await DatabaseBuilder.build(app['config'].database)
+
+
+async def closeDatabase(app):
+    await app['db'].close()
