@@ -1,4 +1,5 @@
 import json
+
 from lib.config import *
 
 
@@ -14,10 +15,10 @@ class Singleton(object):
 
 
 def JsonDecodeToConfig(file_name: str):
-    fp = open(file_name)
-    config_dict = json.load(fp=fp)
-    return Config(database=DatabaseConfig(**config_dict.get("database")),
-                  lock=LockConfig(**config_dict.get("lock")))
+    with open(file_name) as fp:
+        config_dict = json.load(fp=fp)
+        return Config(database=DatabaseConfig(**config_dict.get("database")),
+                      lock=LockConfig(**config_dict.get("lock")))
 
 
 # 指明util模块中需要导出的对象
