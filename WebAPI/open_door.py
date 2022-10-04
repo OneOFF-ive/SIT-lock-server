@@ -2,7 +2,7 @@ import asyncio
 
 from aiohttp import web
 from lib.lock_url_builder import *
-from lib.send_request import *
+from lib.util import send_request
 
 
 async def open_door(request):
@@ -11,4 +11,3 @@ async def open_door(request):
     # await send_request(url)
     asyncio.create_task(send_request(url))
     return web.Response(text='open')
-

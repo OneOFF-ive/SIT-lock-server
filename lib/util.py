@@ -1,6 +1,7 @@
 import json
-
+import aiohttp
 from lib.config import *
+from db import Database
 
 
 class Singleton(object):
@@ -21,8 +22,28 @@ def JsonDecodeToConfig(file_name: str):
                       lock=LockConfig(**config_dict.get("lock")))
 
 
+async def send_request(url: str):
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url) as resp:
+            print(resp.status)
+            print(await resp.text())
+
+
+async def check_user_by_id(db: Database, s_id: str):
+    sql = 'select * from user where s_id = %s'
+    values = (s_id,)
+    return await db.query(sql, values)
+
+
+async def check_user_by_no(db: Database, c_no: str):
+    sql = 'select * from user where c_no = %s'
+    values = (c_no,)
+    return await db.query(sql, values)
+
 # 指明util模块中需要导出的对象
 __all__ = [
     "Singleton",
-    "JsonDecodeToConfig"
+    "JsonDecodeToConfig",
+    "send_request",
+    "check_user_by_id"
 ]

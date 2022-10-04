@@ -1,6 +1,6 @@
 from aiohttp import web
 from lib.lock_url_builder import *
-from lib.send_request import *
+from lib.util import send_request
 
 
 async def skip_registration(request):
