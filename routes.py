@@ -7,3 +7,8 @@ def setup_routes(app):
     app.router.add_get('/open_door', open_door)
     app.router.add_get('/skip_reg', skip_registration)
     app.router.add_get('/', index)
+
+
+__all__ = [
+    "setup_routes"
+]
