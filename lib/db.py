@@ -19,7 +19,7 @@ class Database:
             password=config.password,
             db=config.db,
             autocommit=autocommit,  # 自动提交模式
-            pool_recycle=3600       # 连接池刷新
+            pool_recycle=300,       # 连接池刷新
         )
 
     async def __getCursor(self):
