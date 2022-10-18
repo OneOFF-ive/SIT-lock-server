@@ -19,10 +19,20 @@ class Database:
             password=config.password,
             db=config.db,
             autocommit=autocommit,  # 自动提交模式
+            pool_recycle=3600       # 连接池刷新
         )
 
     async def __getCursor(self):
         conn = await self.__pool.acquire()
+
+        # 测试连接是否过期
+        while True:
+            try:
+                conn.ping()
+                break
+            except aiomysql.OperationalError:
+                conn.ping(True)
+
         # 返回字典格式
         cur = await conn.cursor(aiomysql.DictCursor)
         return conn, cur
